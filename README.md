@@ -1,0 +1,1 @@
+To run this project just open the jar file :)
