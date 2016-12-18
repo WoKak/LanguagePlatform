@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -13,6 +16,7 @@ public class MyFrame extends JFrame {
     JTextArea answerTextArea;
     JButton okButton;
     JButton nextButton;
+    int points = 0;
 
     public MyFrame() {
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -26,7 +30,7 @@ public class MyFrame extends JFrame {
 
         wordToTranslateLabel = new JLabel("Aby rozpocząć kliknij przycisk Next");
         answerTextArea = new JTextArea(1, 20);
-        okButton =  new JButton("OK");
+        okButton = new JButton("OK");
         nextButton = new JButton("Next");
 
         wordToTranslateLabel.setSize(new Dimension(screenWidth / 4 - 50, 100));
@@ -39,16 +43,18 @@ public class MyFrame extends JFrame {
                 String answer = getAnswerTextArea().getText();
                 String result = KnowledgeBase.findWordInPl(answer);
 
-                if(result == null) {
+                if (result == null) {
                     getWordToTranslateLabel().setText("Błąd! poprawna odpowiedź: " +
                             KnowledgeBase.findWordInEng(getWordToTranslateLabel().getText()));
                     getWordToTranslateLabel().setForeground(Color.RED);
                 } else {
                     getWordToTranslateLabel().setText("Dobrze!");
-                    getWordToTranslateLabel().setForeground(new Color(0,150, 0));
+                    getWordToTranslateLabel().setForeground(new Color(0, 150, 0));
+                    points++;
                 }
             }
         });
+        okButton.setToolTipText("Sprawdź odpowiedź");
 
 
         nextButton.addActionListener(new ActionListener() {
@@ -60,6 +66,7 @@ public class MyFrame extends JFrame {
                 getAnswerTextArea().setText("");
             }
         });
+        nextButton.setToolTipText("Następne słowo");
 
         JPanel pane = new JPanel();
         pane.setLayout(new GridLayout(4, 1));
@@ -81,7 +88,57 @@ public class MyFrame extends JFrame {
 
         add(pane, BorderLayout.CENTER);
 
-        setIconImage(new ImageIcon("pug.png").getImage());
+        setIconImage(new ImageIcon("../../../pug.png").getImage());
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu progress = new JMenu("Postępy");
+
+        this.setJMenuBar(menuBar);
+        menuBar.add(progress);
+
+        JMenuItem save = new JMenuItem("Zapisz postępy i zakończ");
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                File file = null;
+                try {
+                    file = new File("progress.txt");
+                    FileReader reader = new FileReader(file);
+                    BufferedReader bufferedReader = new BufferedReader(reader);
+
+                    ArrayList<String> earlierProgress = new ArrayList();
+
+                    String line = bufferedReader.readLine();
+
+                    while (line != null) {
+
+                        earlierProgress.add(line);
+                        line = bufferedReader.readLine();
+                    }
+
+                    reader.close();
+
+                    FileWriter writer = new FileWriter(file);
+
+                    for (int i = 0; i < earlierProgress.size(); i++) {
+                        writer.write(earlierProgress.get(i) + "\n");
+                    }
+
+                    writer.write(points + "\n");
+                    writer.close();
+                    System.exit(0);
+                } catch (IOException ex) {
+                }
+            }
+        });
+        save.setToolTipText("Zapisuje punkty z sesji i ją kończy");
+
+        JMenuItem show = new JMenuItem("Pokaż dotychczasowe postępy");
+        show.setToolTipText("Pokazuje graf postępów");
+
+        progress.add(save);
+        progress.add(show);
     }
 
     public JLabel getWordToTranslateLabel() {
