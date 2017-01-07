@@ -11,7 +11,7 @@ public class GUI {
                 MyFrame frame = new MyFrame();
                 frame.setTitle("plang");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setResizable(false);
+                frame.setResizable(true);
                 frame.setVisible(true);
 
                 KnowledgeBase knowledgeBase = new KnowledgeBase("sources.txt");

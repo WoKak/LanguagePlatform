@@ -47,6 +47,7 @@ public class MyFrame extends JFrame {
                     getWordToTranslateLabel().setText("Błąd! poprawna odpowiedź: " +
                             KnowledgeBase.findWordInEng(getWordToTranslateLabel().getText()));
                     getWordToTranslateLabel().setForeground(Color.RED);
+                    okButton.setEnabled(false);
                 } else {
                     getWordToTranslateLabel().setText("Dobrze!");
                     getWordToTranslateLabel().setForeground(new Color(0, 150, 0));
@@ -64,6 +65,7 @@ public class MyFrame extends JFrame {
                 getWordToTranslateLabel().setText(KnowledgeBase.getKnowledge().get(idx).getWordInPolish());
                 getWordToTranslateLabel().setForeground(Color.BLACK);
                 getAnswerTextArea().setText("");
+                okButton.setEnabled(true);
             }
         });
         nextButton.setToolTipText("Następne słowo");
@@ -107,25 +109,20 @@ public class MyFrame extends JFrame {
                     FileReader reader = new FileReader(file);
                     BufferedReader bufferedReader = new BufferedReader(reader);
 
-                    ArrayList<String> earlierProgress = new ArrayList();
 
                     String line = bufferedReader.readLine();
 
-                    while (line != null) {
-
-                        earlierProgress.add(line);
-                        line = bufferedReader.readLine();
-                    }
+                    String[] data = line.split(",");
 
                     reader.close();
 
                     FileWriter writer = new FileWriter(file);
 
-                    for (int i = 0; i < earlierProgress.size(); i++) {
-                        writer.write(earlierProgress.get(i) + "\n");
+                    for (int i = 0; i < data.length; i++) {
+                        writer.write(data[i] + ",");
                     }
 
-                    writer.write(points + "\n");
+                    writer.write(points + ",");
                     writer.close();
                     System.exit(0);
                 } catch (IOException ex) {
@@ -136,6 +133,34 @@ public class MyFrame extends JFrame {
 
         JMenuItem show = new JMenuItem("Pokaż dotychczasowe postępy");
         show.setToolTipText("Pokazuje graf postępów");
+
+        show.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                File graph = new File("graph.svg");
+                File progress = new File("progress.txt");
+
+                Graph.drawGraph(graph, progress);
+
+                if (!Desktop.isDesktopSupported()) {
+                    System.err.println("Desktop not supported!");
+                    System.exit(-1);
+                }
+
+                Desktop desktop = Desktop.getDesktop();
+
+                if (desktop.isSupported(Desktop.Action.OPEN)) {
+                    try {
+                        desktop.open(graph);
+                    }
+                    catch (IOException ioe) {
+                        System.err.println("Unable to open: " + graph.getName());
+                    }
+                }
+            }
+        });
 
         progress.add(save);
         progress.add(show);
