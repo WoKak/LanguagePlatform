@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class KnowledgeBase {
 
-    private static ArrayList<Word> knowledge;
+    private ArrayList<Word> knowledge;
 
     public KnowledgeBase (String source) {
         knowledge = new ArrayList<Word>(0);
@@ -30,11 +30,11 @@ public class KnowledgeBase {
         }
     }
 
-    public static ArrayList<Word> getKnowledge() {
+    public ArrayList<Word> getKnowledge() {
         return knowledge;
     }
     
-    public static String findWordInEng(String wordInPolish) {
+    public String findWordInEng(String wordInPolish) {
         for (Word w: knowledge) {
             if (w.getWordInPolish().equals(wordInPolish))
                 return w.getWordInEnglish();
@@ -43,7 +43,7 @@ public class KnowledgeBase {
         return null;
     }
 
-    public static String findWordInPl(String wordInEnglish) {
+    public String findWordInPl(String wordInEnglish) {
         for (Word w: knowledge) {
             if (w.getWordInEnglish().equals(wordInEnglish))
                 return w.getWordInPolish();
