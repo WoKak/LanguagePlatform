@@ -15,6 +15,8 @@ public class Graph {
 
             writer.write(drawCanvas());
             writer.write(drawAxis());
+            writer.write(drawLegend());
+            writer.write(drawLines());
 
             int gap = 30;
 
@@ -23,8 +25,8 @@ public class Graph {
 
             for(int i = 1; i < data.length; i++) {
 
-                Integer tmpY1 = 400 - Integer.parseInt(data[i-1]);
-                Integer tmpY2 = 400 - Integer.parseInt(data[i]);
+                Integer tmpY1 = 400 - 10 * Integer.parseInt(data[i-1]);
+                Integer tmpY2 = 400 - 10 * Integer.parseInt(data[i]);
 
                 writer.write(drawLine(gap - 20, tmpY1.toString(), gap, tmpY2.toString()));
 
@@ -40,7 +42,7 @@ public class Graph {
     public static String drawCanvas() {
 
         String header = "<?xml version=\"1.0\" standalone=\"yes\"?>";
-        String data = "<svg width=\"810\" height=\"410\" version=\"1.1\" " +
+        String data = "<svg width=\"810\" height=\"510\" version=\"1.1\" " +
                 "xmlns=\"http://www.w3.org/2000/svg\">\n";
 
         return header + data;
@@ -66,4 +68,26 @@ public class Graph {
         return line;
     }
 
+    public static String drawLegend() {
+
+        String legend =
+                "<text x=\"10\" y=\"450\" fill=\"black\">LEGENDA: linia zielona 20+ |" +
+                        " linia szara 10+ | linia czerwona 5+</text>\n";
+
+        return legend;
+    }
+
+    public static String drawLines() {
+
+        String greatLine =
+                "<line x1=\"10\" y1=\"250\" x2=\"800\" y2=\"250\" style=\"stroke:rgb(51,204,51);stroke-width:0,5\" />\n";
+
+        String mediumLine =
+                "<line x1=\"10\" y1=\"300\" x2=\"800\" y2=\"300\" style=\"stroke:rgb(128,128,128);stroke-width:0,5\" />\n";
+
+        String badLine =
+                "<line x1=\"10\" y1=\"350\" x2=\"800\" y2=\"350\" style=\"stroke:rgb(255,51,51);stroke-width:0,5\" />\n";
+
+        return greatLine + mediumLine + badLine;
+    }
 }

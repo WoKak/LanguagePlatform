@@ -5,13 +5,20 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+import java.awt.*;
+import java.io.*;
 import java.util.Random;
 
 /**
@@ -25,8 +32,10 @@ public class GUI extends Application {
     private Button nextButton;
     private int points = 0;
     private KnowledgeBase knowledgeBase;
+    private MenuItem save;
+    private MenuItem show;
 
-    public String theme = GUI.class.getResource("style.css").toExternalForm();
+    public String theme = GUI.class.getResource("etc/style.css").toExternalForm();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -46,6 +55,7 @@ public class GUI extends Application {
         okButton.setId("ok");
         okButton.setPrefSize(100,50);
         okButton.setFont(Font.font("Comic Sans MS", 20));
+        okButton.setDisable(true);
 
         nextButton = new Button("Next");
         addActionToNextButton();
@@ -58,11 +68,20 @@ public class GUI extends Application {
         Menu progressMenu = new Menu("Postępy");
         menuBar.getMenus().add(progressMenu);
 
-        VBox root = new VBox(10);
-        root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(3));
-        root.getChildren().add(wordToTranslateLabel);
-        root.getChildren().add(answerTextArea);
+        save = new Menu("Zapisz postępy i zakończ");
+        addActionToSaveMenu();
+        progressMenu.getItems().add(save);
+
+
+        show = new MenuItem("Zobacz postępy");
+        addActionToShowItem();
+        progressMenu.getItems().add(show);
+
+        VBox mainBox = new VBox(10);
+        mainBox.setAlignment(Pos.BOTTOM_CENTER);
+        mainBox.setPadding(new Insets(3));
+        mainBox.getChildren().add(wordToTranslateLabel);
+        mainBox.getChildren().add(answerTextArea);
 
 
         HBox buttonsBox = new HBox(10);
@@ -71,11 +90,16 @@ public class GUI extends Application {
         buttonsBox.getChildren().add(okButton);
         buttonsBox.getChildren().add(nextButton);
 
-        root.getChildren().add(buttonsBox);
+        mainBox.getChildren().add(buttonsBox);
+
+        VBox root = new VBox(80);
+        root.setPadding(new Insets(2));
+        root.getChildren().add(menuBar);
+        root.getChildren().add(mainBox);
 
         Scene scene = new Scene(root, 500, 375);
         primaryStage.setTitle("plang");
-        primaryStage.getIcons().add(new Image("pug.jpg"));
+        primaryStage.getIcons().add(new Image("images/pug.jpg"));
         scene.getStylesheets().add(theme);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -85,15 +109,15 @@ public class GUI extends Application {
         launch(args);
     }
 
-    public Label getWordToTranslateLabel() {
+    private Label getWordToTranslateLabel() {
         return wordToTranslateLabel;
     }
 
-    public TextArea getAnswerTextArea() {
+    private TextArea getAnswerTextArea() {
         return answerTextArea;
     }
 
-    public void addActionToOkButton() {
+    private void addActionToOkButton() {
 
         okButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -110,14 +134,14 @@ public class GUI extends Application {
                     okButton.setDisable(true);
                 } else {
                     getWordToTranslateLabel().setText("Dobrze!");
-                    getWordToTranslateLabel().setTextFill(Color.GREEN);
+                    getWordToTranslateLabel().setTextFill(Color.PALEGREEN);
                     points++;
                 }
             }
         });
     }
 
-    public void addActionToNextButton() {
+    private void addActionToNextButton() {
 
         nextButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -130,6 +154,70 @@ public class GUI extends Application {
                 getWordToTranslateLabel().setTextFill(Color.BLACK);
                 getAnswerTextArea().setText("");
                 okButton.setDisable(false);
+            }
+        });
+    }
+
+    private void addActionToSaveMenu() {
+
+        save.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                File file = null;
+                try {
+                    file = new File("etc/progress/progress.txt");
+                    FileReader reader = new FileReader(file);
+                    BufferedReader bufferedReader = new BufferedReader(reader);
+
+
+                    String line = bufferedReader.readLine();
+
+                    String[] data = line.split(",");
+
+                    reader.close();
+
+                    FileWriter writer = new FileWriter(file);
+
+                    for (int i = 0; i < data.length; i++) {
+                        writer.write(data[i] + ",");
+                    }
+
+                    writer.write(points + ",");
+                    writer.close();
+                    System.exit(0);
+                } catch (IOException ex) {
+                }
+            }
+        });
+    }
+
+    private void addActionToShowItem() {
+
+        show.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                File graph = new File("etc/progress/graph.svg");
+                File progress = new File("etc/progress/progress.txt");
+
+                Graph.drawGraph(graph, progress);
+
+                if (!Desktop.isDesktopSupported()) {
+                    System.err.println("Desktop not supported!");
+                    System.exit(-1);
+                }
+
+                Desktop desktop = Desktop.getDesktop();
+
+                if (desktop.isSupported(Desktop.Action.OPEN)) {
+                    try {
+                        desktop.open(graph);
+                    }
+                    catch (IOException ioe) {
+                        System.err.println("Unable to open: " + graph.getName());
+                    }
+                }
             }
         });
     }
