@@ -1,6 +1,4 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -119,10 +117,7 @@ public class GUI extends Application {
 
     private void addActionToOkButton() {
 
-        okButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
+        okButton.setOnAction((event) -> {
 
                 String answer = getAnswerTextArea().getText();
                 String result = knowledgeBase.findWordInPl(answer);
@@ -137,16 +132,12 @@ public class GUI extends Application {
                     getWordToTranslateLabel().setTextFill(Color.PALEGREEN);
                     points++;
                 }
-            }
         });
     }
 
     private void addActionToNextButton() {
 
-        nextButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
+        nextButton.setOnAction((event) -> {
 
                 Random random = new Random();
                 int idx = random.nextInt(knowledgeBase.getKnowledge().size());
@@ -154,15 +145,12 @@ public class GUI extends Application {
                 getWordToTranslateLabel().setTextFill(Color.BLACK);
                 getAnswerTextArea().setText("");
                 okButton.setDisable(false);
-            }
         });
     }
 
     private void addActionToSaveMenu() {
 
-        save.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        save.setOnAction((event) -> {
 
                 File file = null;
                 try {
@@ -188,15 +176,12 @@ public class GUI extends Application {
                     System.exit(0);
                 } catch (IOException ex) {
                 }
-            }
         });
     }
 
     private void addActionToShowItem() {
 
-        show.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        show.setOnAction((event) -> {
 
                 File graph = new File("etc/progress/graph.svg");
                 File progress = new File("etc/progress/progress.txt");
@@ -218,7 +203,6 @@ public class GUI extends Application {
                         System.err.println("Unable to open: " + graph.getName());
                     }
                 }
-            }
         });
     }
 }
