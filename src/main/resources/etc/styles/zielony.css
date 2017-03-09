@@ -1,0 +1,31 @@
+.root {
+    -fx-background-image: url("../../images/green.jpg");
+}
+
+#ok {
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+    -fx-border-color: #0a912d;
+    -fx-background-color: white;
+    -fx-border-width: 8;
+}
+
+#ok:hover {
+    -fx-border-color: #0a912d;
+    -fx-background-color: #15ff5e;
+    -fx-text-fill: white;
+}
+
+#next {
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+    -fx-border-color: #0a912d;
+    -fx-background-color: white;
+    -fx-border-width: 8;
+}
+
+#next:hover {
+    -fx-border-color: #0a912d;
+    -fx-background-color: #15ff5e;
+    -fx-text-fill: white;
+}
