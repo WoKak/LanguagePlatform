@@ -71,7 +71,7 @@ public class Graph {
     public static String drawLegend() {
 
         String legend =
-                "<text x=\"10\" y=\"450\" fill=\"black\">LEGENDA: linia zielona 20+ |" +
+                "<text x=\"10\" y=\"450\" fill=\"black\">LEGENDA: linia zielona 15+ |" +
                         " linia szara 10+ | linia czerwona 5+</text>\n";
 
         return legend;

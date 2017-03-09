@@ -32,8 +32,10 @@ public class GUI extends Application {
     private KnowledgeBase knowledgeBase;
     private MenuItem save;
     private MenuItem show;
+    private MenuItem blue, green, red;
+    private Scene scene;
 
-    public String theme = GUI.class.getResource("etc/style.css").toExternalForm();
+    public String theme = GUI.class.getResource("etc/styles/niebieski.css").toExternalForm();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -95,11 +97,27 @@ public class GUI extends Application {
         root.getChildren().add(menuBar);
         root.getChildren().add(mainBox);
 
-        Scene scene = new Scene(root, 500, 375);
+        scene = new Scene(root, 500, 375);
         primaryStage.setTitle("plang");
         primaryStage.getIcons().add(new Image("images/pug.jpg"));
         scene.getStylesheets().add(theme);
         primaryStage.setScene(scene);
+
+        Menu styleMenu = new Menu("Style");
+        menuBar.getMenus().add(styleMenu);
+
+        blue = new MenuItem("niebieski");
+        addActionToStyleItem(blue, scene);
+        styleMenu.getItems().add(blue);
+
+        green = new MenuItem("zielony");
+        addActionToStyleItem(green, scene);
+        styleMenu.getItems().add(green);
+
+        red = new MenuItem("czerwony");
+        addActionToStyleItem(red, scene);
+        styleMenu.getItems().add(red);
+
         primaryStage.show();
     }
 
@@ -203,6 +221,16 @@ public class GUI extends Application {
                         System.err.println("Unable to open: " + graph.getName());
                     }
                 }
+        });
+    }
+
+    private void addActionToStyleItem(MenuItem item, Scene scene) {
+
+        item.setOnAction((event) -> {
+
+            String style = "etc/styles/" + item.getText() + ".css";
+            theme = GUI.class.getResource(style).toExternalForm();
+            scene.getStylesheets().add(theme);
         });
     }
 }
