@@ -12,35 +12,30 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import java.awt.*;
-import java.io.*;
-import java.util.Random;
+
 
 /**
  * Created by Michał on 2017-02-21.
  */
 public class GUI extends Application {
 
-    private Label wordToTranslateLabel;
-    private TextArea answerTextArea;
-    private Button okButton;
-    private Button nextButton;
-    private int points = 0;
-    private KnowledgeBase knowledgeBase;
+    private static Label wordToTranslateLabel;
+    private static TextArea answerTextArea;
+    private static Button okButton;
+    private static Button nextButton;
     private MenuItem save;
     private MenuItem show;
     private MenuItem blue, green, red, yellow;
     private Scene scene;
 
-    public String theme = GUI.class.getResource("etc/styles/niebieski.css").toExternalForm();
+    private String theme = GUI.class.getResource("etc/styles/zielony.css").toExternalForm();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        knowledgeBase = new KnowledgeBase("base.txt");
+        Logic logic = new Logic();
 
         wordToTranslateLabel = new Label("Aby rozpocząć kliknij przycisk Next");
         wordToTranslateLabel.setFont(Font.font("Comic Sans MS", 20));
@@ -50,7 +45,7 @@ public class GUI extends Application {
         answerTextArea.setFont(Font.font("Comic Sans MS", 20));
 
         okButton = new Button("OK");
-        addActionToOkButton();
+        logic.addActionToOkButton();
         okButton.setTooltip(new Tooltip("Sprawdź"));
         okButton.setId("ok");
         okButton.setPrefSize(100,50);
@@ -58,7 +53,7 @@ public class GUI extends Application {
         okButton.setDisable(true);
 
         nextButton = new Button("Next");
-        addActionToNextButton();
+        logic.addActionToNextButton();
         nextButton.setTooltip(new Tooltip("Następne słowo"));
         nextButton.setId("next");
         nextButton.setPrefSize(100,50);
@@ -68,13 +63,13 @@ public class GUI extends Application {
         Menu progressMenu = new Menu("Postępy");
         menuBar.getMenus().add(progressMenu);
 
-        save = new Menu("Zapisz postępy i zakończ");
-        addActionToSaveMenu();
+        save = new MenuItem("Zapisz postępy i zakończ");
+        logic.addActionToSaveMenu(save);
         progressMenu.getItems().add(save);
 
 
         show = new MenuItem("Zobacz postępy");
-        addActionToShowItem();
+        logic.addActionToShowItem(show);
         progressMenu.getItems().add(show);
 
         VBox mainBox = new VBox(10);
@@ -118,103 +113,27 @@ public class GUI extends Application {
         launch(args);
     }
 
-    private Label getWordToTranslateLabel() {
+    public static Label getWordToTranslateLabel() {
         return wordToTranslateLabel;
     }
 
-    private TextArea getAnswerTextArea() {
+    public static TextArea getAnswerTextArea() {
         return answerTextArea;
     }
 
-    private void addActionToOkButton() {
-
-        okButton.setOnAction((event) -> {
-
-                String answer = getAnswerTextArea().getText();
-                String result = knowledgeBase.findWordInPl(answer);
-
-                if (result == null) {
-                    getWordToTranslateLabel().setText("Błąd! poprawna odpowiedź: " +
-                            knowledgeBase.findWordInEng(getWordToTranslateLabel().getText()));
-                    getWordToTranslateLabel().setTextFill(Color.RED);
-                    okButton.setDisable(true);
-                } else {
-                    getWordToTranslateLabel().setText("Dobrze!");
-                    getWordToTranslateLabel().setTextFill(Color.PALEGREEN);
-                    points++;
-                }
-        });
+    public static Button getOkButton() {
+        return okButton;
     }
 
-    private void addActionToNextButton() {
-
-        nextButton.setOnAction((event) -> {
-
-                Random random = new Random();
-                int idx = random.nextInt(knowledgeBase.getKnowledge().size());
-                getWordToTranslateLabel().setText(knowledgeBase.getKnowledge().get(idx).getWordInPolish());
-                getWordToTranslateLabel().setTextFill(Color.BLACK);
-                getAnswerTextArea().setText("");
-                okButton.setDisable(false);
-        });
+    public static Button getNextButton() {
+        return nextButton;
     }
 
-    private void addActionToSaveMenu() {
+    private void makeStyleMenuItem(String name, MenuItem item, Scene scene, Menu menu) {
 
-        save.setOnAction((event) -> {
-
-                File file = null;
-                try {
-                    file = new File("etc/progress/progress.txt");
-                    FileReader reader = new FileReader(file);
-                    BufferedReader bufferedReader = new BufferedReader(reader);
-
-
-                    String line = bufferedReader.readLine();
-
-                    String[] data = line.split(",");
-
-                    reader.close();
-
-                    FileWriter writer = new FileWriter(file);
-
-                    for (int i = 0; i < data.length; i++) {
-                        writer.write(data[i] + ",");
-                    }
-
-                    writer.write(points + ",");
-                    writer.close();
-                    System.exit(0);
-                } catch (IOException ex) {
-                }
-        });
-    }
-
-    private void addActionToShowItem() {
-
-        show.setOnAction((event) -> {
-
-                File graph = new File("etc/progress/graph.svg");
-                File progress = new File("etc/progress/progress.txt");
-
-                Graph.drawGraph(graph, progress);
-
-                if (!Desktop.isDesktopSupported()) {
-                    System.err.println("Desktop not supported!");
-                    System.exit(-1);
-                }
-
-                Desktop desktop = Desktop.getDesktop();
-
-                if (desktop.isSupported(Desktop.Action.OPEN)) {
-                    try {
-                        desktop.open(graph);
-                    }
-                    catch (IOException ioe) {
-                        System.err.println("Unable to open: " + graph.getName());
-                    }
-                }
-        });
+        item = new MenuItem(name);
+        addActionToStyleItem(item, scene);
+        menu.getItems().add(item);
     }
 
     private void addActionToStyleItem(MenuItem item, Scene scene) {
@@ -225,12 +144,5 @@ public class GUI extends Application {
             theme = GUI.class.getResource(style).toExternalForm();
             scene.getStylesheets().add(theme);
         });
-    }
-
-    private void makeStyleMenuItem(String name, MenuItem item, Scene scene, Menu menu) {
-
-        item = new MenuItem(name);
-        addActionToStyleItem(item, scene);
-        menu.getItems().add(item);
     }
 }

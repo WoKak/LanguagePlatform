@@ -23,3 +23,9 @@
     -fx-background-color: white;
     -fx-border-width: 8;
 }
+
+#next:hover {
+    -fx-border-color: #2b8dff;
+    -fx-background-color: #73a9ff;
+    -fx-text-fill: white;
+}

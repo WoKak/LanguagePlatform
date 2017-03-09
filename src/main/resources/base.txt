@@ -18,3 +18,14 @@ ludzie, people
 ser, cheese
 szynka, ham
 chomik, hamster
+minuta, minute
+nieznajomy, stranger
+obawa, afraid
+dom, house
+zabawa, fun
+raj, paradise
+impreza, party
+koszulka, t-shirt
+skarpetka, sock
+szyfr, cipher
+zielony, green
