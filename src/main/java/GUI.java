@@ -32,7 +32,7 @@ public class GUI extends Application {
     private KnowledgeBase knowledgeBase;
     private MenuItem save;
     private MenuItem show;
-    private MenuItem blue, green, red;
+    private MenuItem blue, green, red, yellow;
     private Scene scene;
 
     public String theme = GUI.class.getResource("etc/styles/niebieski.css").toExternalForm();
@@ -99,24 +99,17 @@ public class GUI extends Application {
 
         scene = new Scene(root, 500, 375);
         primaryStage.setTitle("plang");
-        primaryStage.getIcons().add(new Image("images/pug.jpg"));
+        primaryStage.getIcons().add(new Image("images/pug.png"));
         scene.getStylesheets().add(theme);
         primaryStage.setScene(scene);
 
         Menu styleMenu = new Menu("Style");
         menuBar.getMenus().add(styleMenu);
 
-        blue = new MenuItem("niebieski");
-        addActionToStyleItem(blue, scene);
-        styleMenu.getItems().add(blue);
-
-        green = new MenuItem("zielony");
-        addActionToStyleItem(green, scene);
-        styleMenu.getItems().add(green);
-
-        red = new MenuItem("czerwony");
-        addActionToStyleItem(red, scene);
-        styleMenu.getItems().add(red);
+        makeStyleMenuItem("niebieski", blue, scene, styleMenu);
+        makeStyleMenuItem("zielony", green, scene, styleMenu);
+        makeStyleMenuItem("czerwony", red, scene, styleMenu);
+        makeStyleMenuItem("żółty", yellow, scene, styleMenu);
 
         primaryStage.show();
     }
@@ -232,5 +225,12 @@ public class GUI extends Application {
             theme = GUI.class.getResource(style).toExternalForm();
             scene.getStylesheets().add(theme);
         });
+    }
+
+    private void makeStyleMenuItem(String name, MenuItem item, Scene scene, Menu menu) {
+
+        item = new MenuItem(name);
+        addActionToStyleItem(item, scene);
+        menu.getItems().add(item);
     }
 }
