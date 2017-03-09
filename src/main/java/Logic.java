@@ -37,7 +37,7 @@ public class Logic {
                 GUI.getOkButton().setDisable(true);
             } else {
                 GUI.getWordToTranslateLabel().setText("Dobrze!");
-                GUI.getWordToTranslateLabel().setTextFill(Color.PALEGREEN);
+                GUI.getWordToTranslateLabel().setTextFill(Color.LIMEGREEN);
                 points++;
             }
         });
@@ -82,6 +82,7 @@ public class Logic {
 
                 writer.write(points + ",");
                 writer.close();
+                GUI.getShow().fire();
                 System.exit(0);
             } catch (IOException ex) {
             }
@@ -113,5 +114,13 @@ public class Logic {
                 }
             }
         });
+    }
+
+    public void addActionToAddButton() {
+
+        GUI.getAddButton().setOnAction((event -> {
+
+
+        }));
     }
 }

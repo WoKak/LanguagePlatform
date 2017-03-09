@@ -29,3 +29,19 @@
     -fx-background-color: #15ff5e;
     -fx-text-fill: white;
 }
+
+#add {
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+    -fx-border-color: #0a912d;
+    -fx-background-color: #0a912d;
+    -fx-text-fill: white;
+}
+
+#add:hover {
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+    -fx-border-color: #15ff5e;
+    -fx-background-color: #15ff5e;
+    -fx-text-fill: white;
+}
