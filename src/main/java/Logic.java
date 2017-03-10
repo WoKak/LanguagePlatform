@@ -68,7 +68,7 @@ public class Logic {
 
             if (i != 20) {
 
-                GUI.getWordToTranslateLabel().setText(exercise.getTasks().get(i).getWord().getWordInPolish());
+                GUI.getWordToTranslateLabel().setText(exercise.getTasks().get(i).getWordInPolish());
                 GUI.getWordToTranslateLabel().setTextFill(Color.BLACK);
                 GUI.getAnswerTextArea().setText("");
                 GUI.getOkButton().setDisable(false);

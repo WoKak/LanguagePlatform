@@ -6,11 +6,11 @@ import java.util.Random;
  */
 public class Exercise {
 
-    private ArrayList<Task> tasks;
+    private ArrayList<Word> tasks;
 
     public Exercise() {
 
-        tasks = new ArrayList<Task>(0);
+        tasks = new ArrayList<Word>(0);
 
         Logic logic = Logic.getInstance();
 
@@ -25,29 +25,29 @@ public class Exercise {
                 idx = random.nextInt(logic.getKnowledgeBase().getKnowledge().size());
             }
 
-            Task tmp = new Task(logic.getKnowledgeBase().getKnowledge().get(idx));
+            Word tmp = logic.getKnowledgeBase().getKnowledge().get(idx);
             tasks.add(tmp);
             alreadyInTasks.add(idx);
         }
     }
 
-    public ArrayList<Task> getTasks() {
+    public ArrayList<Word> getTasks() {
         return tasks;
     }
 
     public String findWordInEng(String wordInPolish) {
-        for (Task t: tasks) {
-            if (t.getWord().getWordInPolish().equals(wordInPolish))
-                return t.getWord().getWordInEnglish();
+        for (Word t: tasks) {
+            if (t.getWordInPolish().equals(wordInPolish))
+                return t.getWordInEnglish();
         }
 
         return null;
     }
 
     public String findWordInPl(String wordInEnglish) {
-        for (Task t: tasks) {
-            if (t.getWord().getWordInEnglish().equals(wordInEnglish))
-                return t.getWord().getWordInPolish();
+        for (Word t: tasks) {
+            if (t.getWordInEnglish().equals(wordInEnglish))
+                return t.getWordInPolish();
         }
 
         return null;
