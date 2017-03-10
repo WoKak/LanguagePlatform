@@ -26,7 +26,7 @@ public class GUI extends Application {
     private static Button okButton;
     private static Button nextButton;
     private static Button addButton;
-    private MenuItem save;
+    private static MenuItem save;
     private static MenuItem show;
     private MenuItem blue, green, red, yellow;
     private Scene scene;
@@ -36,7 +36,8 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Logic logic = new Logic();
+        Logic logic = Logic.getInstance();
+        logic.generateExercises();
 
         wordToTranslateLabel = new Label("Aby rozpocząć kliknij przycisk Next");
         wordToTranslateLabel.setFont(Font.font("Comic Sans MS", 20));
@@ -99,6 +100,7 @@ public class GUI extends Application {
         addBox.setAlignment(Pos.BOTTOM_RIGHT);
         addBox.getChildren().add(addButton);
         addBox.setPrefSize(50,50);
+        logic.addActionToAddButton();
 
         mainBox.getChildren().add(addBox);
 
@@ -150,6 +152,10 @@ public class GUI extends Application {
 
     public static MenuItem getShow() {
         return show;
+    }
+
+    public static MenuItem getSave() {
+        return save;
     }
 
     private void makeStyleMenuItem(String name, MenuItem item, Scene scene, Menu menu) {

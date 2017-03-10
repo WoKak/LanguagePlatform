@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
 
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
@@ -17,10 +16,30 @@ public class Logic {
 
     private int points;
     private KnowledgeBase knowledgeBase;
+    private static Logic instance = null;
+    private Exercise exercise;
+    private int i = 0;
 
-    public Logic() {
+    public static Logic getInstance() {
+
+        if (instance == null) {
+            instance = new Logic();
+        }
+
+        return instance;
+    }
+
+    private Logic() {
         this.points = 0;
         this.knowledgeBase = new KnowledgeBase("base.txt");
+    }
+
+    public KnowledgeBase getKnowledgeBase() {
+        return knowledgeBase;
+    }
+
+    public void generateExercises() {
+        this.exercise = new Exercise();
     }
 
     public void addActionToOkButton() {
@@ -28,11 +47,11 @@ public class Logic {
         GUI.getOkButton().setOnAction((event) -> {
 
             String answer = GUI.getAnswerTextArea().getText();
-            String result = knowledgeBase.findWordInPl(answer);
+            String result = exercise.findWordInPl(answer);
 
             if (result == null) {
                 GUI.getWordToTranslateLabel().setText("Błąd! poprawna odpowiedź: " +
-                        knowledgeBase.findWordInEng(GUI.getWordToTranslateLabel().getText()));
+                        exercise.findWordInEng(GUI.getWordToTranslateLabel().getText()));
                 GUI.getWordToTranslateLabel().setTextFill(Color.RED);
                 GUI.getOkButton().setDisable(true);
             } else {
@@ -47,13 +66,17 @@ public class Logic {
 
         GUI.getNextButton().setOnAction((event) -> {
 
-            Random random = new Random();
-            int idx = random.nextInt(knowledgeBase.getKnowledge().size());
-            GUI.getWordToTranslateLabel().setText(knowledgeBase.getKnowledge().get(idx).getWordInPolish());
-            GUI.getWordToTranslateLabel().setTextFill(Color.BLACK);
-            GUI.getAnswerTextArea().setText("");
-            GUI.getOkButton().setDisable(false);
+            if (i != 20) {
 
+                GUI.getWordToTranslateLabel().setText(exercise.getTasks().get(i).getWord().getWordInPolish());
+                GUI.getWordToTranslateLabel().setTextFill(Color.BLACK);
+                GUI.getAnswerTextArea().setText("");
+                GUI.getOkButton().setDisable(false);
+                i++;
+            } else {
+
+                GUI.getSave().fire();
+            }
         });
     }
 
@@ -108,8 +131,7 @@ public class Logic {
             if (desktop.isSupported(Desktop.Action.OPEN)) {
                 try {
                     desktop.open(graph);
-                }
-                catch (IOException ioe) {
+                } catch (IOException ioe) {
                     System.err.println("Unable to open: " + graph.getName());
                 }
             }
@@ -119,7 +141,6 @@ public class Logic {
     public void addActionToAddButton() {
 
         GUI.getAddButton().setOnAction((event -> {
-
 
         }));
     }

@@ -33,22 +33,5 @@ public class KnowledgeBase {
     public ArrayList<Word> getKnowledge() {
         return knowledge;
     }
-    
-    public String findWordInEng(String wordInPolish) {
-        for (Word w: knowledge) {
-            if (w.getWordInPolish().equals(wordInPolish))
-                return w.getWordInEnglish();
-        }
 
-        return null;
-    }
-
-    public String findWordInPl(String wordInEnglish) {
-        for (Word w: knowledge) {
-            if (w.getWordInEnglish().equals(wordInEnglish))
-                return w.getWordInPolish();
-        }
-
-        return null;
-    }
 }
