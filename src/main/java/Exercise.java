@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -36,20 +37,26 @@ public class Exercise {
     }
 
     public String findWordInEng(String wordInPolish) {
+
+        String toReturn = null;
+
         for (Word t: tasks) {
             if (t.getWordInPolish().equals(wordInPolish))
-                return t.getWordInEnglish();
+                toReturn = t.getWordInEnglish();
         }
 
-        return null;
+        return Optional.ofNullable(toReturn).orElse("ERROR");
     }
 
-    public String findWordInPl(String wordInEnglish) {
+    public String findWordInPl(String wordInEnglish){
+
+        String toReturn = null;
+
         for (Word t: tasks) {
             if (t.getWordInEnglish().equals(wordInEnglish))
-                return t.getWordInPolish();
+                toReturn =  t.getWordInPolish();
         }
 
-        return null;
+        return Optional.ofNullable(toReturn).orElse("ERROR");
     }
 }

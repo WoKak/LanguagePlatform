@@ -49,7 +49,7 @@ public class Logic {
             String answer = GUI.getAnswerTextArea().getText();
             String result = exercise.findWordInPl(answer);
 
-            if (result == null) {
+            if (result.equals("ERROR")) {
                 GUI.getWordToTranslateLabel().setText("Błąd! poprawna odpowiedź: " +
                         exercise.findWordInEng(GUI.getWordToTranslateLabel().getText()));
                 GUI.getWordToTranslateLabel().setTextFill(Color.RED);
