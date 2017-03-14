@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Optional;
 
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
@@ -22,11 +23,7 @@ public class Logic {
 
     public static Logic getInstance() {
 
-        if (instance == null) {
-            instance = new Logic();
-        }
-
-        return instance;
+        return Optional.ofNullable(instance).orElse(instance = new Logic());
     }
 
     private Logic() {
