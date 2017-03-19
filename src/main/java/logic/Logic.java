@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Optional;
 
 import database.Connection;
@@ -153,14 +152,14 @@ public class Logic {
 
             try {
 
-                if (isTableExist("Main")) {
+                if (isTableExist()) {
 
                     DropTable.runDrop();
-                    CreateTable.runInit();
+                    CreateTable.runCreate();
 
                 } else {
 
-                    CreateTable.runInit();
+                    CreateTable.runCreate();
                 }
 
             } catch (SQLException ex) {
@@ -176,23 +175,16 @@ public class Logic {
         }));
     }
 
-    public static boolean isTableExist(String tableName) throws SQLException, IOException {
+    public static boolean isTableExist() throws SQLException, IOException {
 
         boolean tableExists = false;
 
         try (java.sql.Connection conn = Connection.getConnection()) {
 
-            try (ResultSet rs = conn.getMetaData().getTables(null, null, tableName, null)) {
-
-                while (rs.next()) {
-
-                    String resTableName = rs.getString("TABLE_NAME");
-
-                    if (resTableName != null && resTableName.equals(tableName)) {
-                        tableExists = true;
-                        break;
-                    }
-                }
+            DatabaseMetaData md = conn.getMetaData();
+            ResultSet rs = md.getTables(null, null, "main", null);
+            while (rs.next()) {
+                tableExists = true;
             }
         }
 

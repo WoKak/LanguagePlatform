@@ -12,20 +12,7 @@ public class CreateTable {
 
     private static String insertUpdate = "INSERT INTO Main VALUES (?, ?, ?)";
 
-    public static void main(String args[]) throws IOException {
-
-        try {
-            runInit();
-
-        } catch (SQLException ex) {
-
-            for (Throwable t : ex)
-                t.printStackTrace();
-
-        }
-    }
-
-    public static void runInit() throws SQLException, IOException {
+    public static void runCreate() throws SQLException, IOException {
 
         try (java.sql.Connection conn = Connection.getConnection()) {
             Statement stat = conn.createStatement();

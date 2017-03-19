@@ -8,22 +8,6 @@ import java.sql.*;
  */
 public class DropTable {
 
-    public static void main(String args[]) throws IOException {
-
-        try {
-            runDrop();
-
-        } catch (SQLException ex) {
-
-            for (Throwable t : ex)
-                t.printStackTrace();
-
-        } catch (IOException ex) {
-
-            System.out.println("Read error!");
-        }
-    }
-
     public static void runDrop() throws SQLException, IOException {
 
         try (java.sql.Connection conn = Connection.getConnection()) {

@@ -7,7 +7,9 @@ To run this project:
 1. (database version - latest one)
 
 At first PostgreSQL Server is needed. Then it is crucial to create database named plang.
-You also need PostgreSQL driver for Java, add it to classpath then you can run it.
+Run jar file using command:
+
+java -jar plang(latest_ver).jar
 
 2. (old version)
 

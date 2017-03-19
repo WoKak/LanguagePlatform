@@ -14,10 +14,10 @@ public class Word {
     }
 
     public String getWordInPolish() {
-        return wordInPolish;
+        return this.wordInPolish;
     }
 
     public String getWordInEnglish() {
-        return wordInEnglish;
+        return this.wordInEnglish;
     }
 }

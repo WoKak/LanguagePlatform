@@ -60,7 +60,7 @@ public class Exercise {
                 {
                     if (result.next()) {
 
-                        Word tmp = new Word(result.getString(1), result.getString(2));
+                        Word tmp = new Word(result.getString(1).trim(), result.getString(2).trim());
                         tasks.add(tmp);
                     }
 
@@ -89,8 +89,9 @@ public class Exercise {
         String toReturn = null;
 
         for (Word t: tasks) {
-            if (t.getWordInPolish().equals(wordInPolish))
+            if (t.getWordInPolish().trim().equals(wordInPolish)) {
                 toReturn = t.getWordInEnglish();
+            }
         }
 
         return Optional.ofNullable(toReturn).orElse("ERROR");
@@ -101,8 +102,9 @@ public class Exercise {
         String toReturn = null;
 
         for (Word t: tasks) {
-            if (t.getWordInEnglish().equals(wordInEnglish))
-                toReturn =  t.getWordInPolish();
+            if (t.getWordInEnglish().trim().equals(wordInEnglish)) {
+                toReturn = t.getWordInPolish();
+            }
         }
 
         return Optional.ofNullable(toReturn).orElse("ERROR");

@@ -1,7 +1,6 @@
 package app;
 
 import database.CreateTable;
-import database.DropTable;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,9 +43,9 @@ public class GUI extends Application {
 
         Logic logic = Logic.getInstance();
 
-        if (!Logic.isTableExist("Main")) {
+        if (!Logic.isTableExist()) {
 
-            CreateTable.runInit();
+            CreateTable.runCreate();
         }
 
         logic.generateExercises();
