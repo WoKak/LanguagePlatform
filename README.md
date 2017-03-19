@@ -28,3 +28,10 @@ You also need base.txt file in both versions:
 
 In order to change base just replace base.txt file (WARNING! words should be in the same order
 as before).
+
+As well as you need database.properties file, i.e:
+
+jdbc.drivers=org.postgresql.Driver
+jdbc.url=jdbc:postgresql:plang
+jdbc.username=postgres
+jdbc.password=verysecretpassword
