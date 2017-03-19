@@ -32,6 +32,9 @@ as before).
 As well as you need database.properties file, i.e:
 
 jdbc.drivers=org.postgresql.Driver
+
 jdbc.url=jdbc:postgresql:plang
+
 jdbc.username=postgres
+
 jdbc.password=verysecretpassword
