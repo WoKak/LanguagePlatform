@@ -8,7 +8,7 @@ import java.io.*;
  * Created by Michał on 2017-03-19.
  */
 
-public class InitDatabase {
+public class CreateTable {
 
     private static String insertUpdate = "INSERT INTO Main VALUES (?, ?, ?)";
 

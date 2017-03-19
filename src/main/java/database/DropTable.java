@@ -6,7 +6,7 @@ import java.sql.*;
 /**
  * Created by Michał on 2017-03-19.
  */
-public class DrobDatabase {
+public class DropTable {
     public static void main(String args[]) throws IOException {
 
         try {
