@@ -51,9 +51,8 @@ public class CreateTable {
                     line = bufferedReader.readLine();
                 }
             } catch (IOException ex) {
-                System.out.println("Błąd w czytaniu!");
+                System.out.println("Read error!");
             }
-
         }
     }
 }

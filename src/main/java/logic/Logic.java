@@ -6,8 +6,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
+import database.Connection;
+import database.CreateTable;
+import database.DropTable;
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
 
@@ -138,5 +145,57 @@ public class Logic {
         GUI.getAddButton().setOnAction((event -> {
 
         }));
+    }
+
+    public void addActionToImportItem(MenuItem item) {
+
+        GUI.getAddButton().setOnAction((event -> {
+
+            try {
+
+                if (isTableExist("Main")) {
+
+                    DropTable.runDrop();
+                    CreateTable.runInit();
+
+                } else {
+
+                    CreateTable.runInit();
+                }
+
+            } catch (SQLException ex) {
+
+                for (Throwable t : ex)
+                    t.printStackTrace();
+
+            } catch (IOException ex) {
+
+                System.out.print("Read error!");
+            }
+
+        }));
+    }
+
+    public static boolean isTableExist(String tableName) throws SQLException, IOException {
+
+        boolean tableExists = false;
+
+        try (java.sql.Connection conn = Connection.getConnection()) {
+
+            try (ResultSet rs = conn.getMetaData().getTables(null, null, tableName, null)) {
+
+                while (rs.next()) {
+
+                    String resTableName = rs.getString("TABLE_NAME");
+
+                    if (resTableName != null && resTableName.equals(tableName)) {
+                        tableExists = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return tableExists;
     }
 }

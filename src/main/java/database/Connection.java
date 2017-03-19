@@ -1,7 +1,5 @@
 package database;
 
-import logic.Exercise;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;

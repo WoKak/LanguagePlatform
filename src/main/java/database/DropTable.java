@@ -7,6 +7,7 @@ import java.sql.*;
  * Created by Michał on 2017-03-19.
  */
 public class DropTable {
+
     public static void main(String args[]) throws IOException {
 
         try {
@@ -17,14 +18,16 @@ public class DropTable {
             for (Throwable t : ex)
                 t.printStackTrace();
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
 
+            System.out.println("Read error!");
         }
     }
 
     public static void runDrop() throws SQLException, IOException {
 
         try (java.sql.Connection conn = Connection.getConnection()) {
+
             Statement stat = conn.createStatement();
 
             stat.executeUpdate("DROP TABLE Main");

@@ -1,5 +1,7 @@
 package app;
 
+import database.CreateTable;
+import database.DropTable;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,6 +33,7 @@ public class GUI extends Application {
     private static Button addButton;
     private static MenuItem save;
     private static MenuItem show;
+    private static MenuItem dbImport;
     private MenuItem blue, green, red, yellow;
     private Scene scene;
 
@@ -40,6 +43,12 @@ public class GUI extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         Logic logic = Logic.getInstance();
+
+        if (!Logic.isTableExist("Main")) {
+
+            CreateTable.runInit();
+        }
+
         logic.generateExercises();
 
         wordToTranslateLabel = new Label("Aby rozpocząć kliknij przycisk Next");
@@ -73,7 +82,9 @@ public class GUI extends Application {
 
         MenuBar menuBar = new MenuBar();
         Menu progressMenu = new Menu("Postępy");
+        Menu baseMenu = new Menu("Baza");
         menuBar.getMenus().add(progressMenu);
+        menuBar.getMenus().add(baseMenu);
 
         save = new MenuItem("Zapisz postępy i zakończ");
         logic.addActionToSaveMenu(save);
@@ -83,6 +94,10 @@ public class GUI extends Application {
         show = new MenuItem("Zobacz postępy");
         logic.addActionToShowItem(show);
         progressMenu.getItems().add(show);
+
+        dbImport = new MenuItem("Importuj do bazy");
+        logic.addActionToImportItem(dbImport);
+        baseMenu.getItems().add(dbImport);
 
         VBox mainBox = new VBox(10);
         mainBox.setAlignment(Pos.BOTTOM_CENTER);
