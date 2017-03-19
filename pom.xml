@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>GUI</mainClass>
+                            <mainClass>app.GUI</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

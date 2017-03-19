@@ -1,3 +1,5 @@
+package logic;
+
 import java.io.BufferedReader;
 import java.awt.Desktop;
 import java.io.File;
@@ -9,6 +11,8 @@ import java.util.Optional;
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
 
+import app.*;
+
 
 /**
  * Created by Michał on 2017-03-09.
@@ -16,7 +20,6 @@ import javafx.scene.paint.Color;
 public class Logic {
 
     private int points;
-    private KnowledgeBase knowledgeBase;
     private static Logic instance = null;
     private Exercise exercise;
     private int i = 0;
@@ -28,11 +31,6 @@ public class Logic {
 
     private Logic() {
         this.points = 0;
-        this.knowledgeBase = new KnowledgeBase("base.txt");
-    }
-
-    public KnowledgeBase getKnowledgeBase() {
-        return knowledgeBase;
     }
 
     public void generateExercises() {

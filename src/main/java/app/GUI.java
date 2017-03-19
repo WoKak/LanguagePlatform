@@ -1,3 +1,5 @@
+package app;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import logic.Logic;
 
 
 /**
@@ -31,7 +34,7 @@ public class GUI extends Application {
     private MenuItem blue, green, red, yellow;
     private Scene scene;
 
-    private String theme = GUI.class.getResource("etc/styles/zielony.css").toExternalForm();
+    private String theme = "etc/styles/zielony.css";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -170,7 +173,7 @@ public class GUI extends Application {
         item.setOnAction((event) -> {
 
             String style = "etc/styles/" + item.getText() + ".css";
-            theme = GUI.class.getResource(style).toExternalForm();
+            theme = style;
             scene.getStylesheets().add(theme);
         });
     }
