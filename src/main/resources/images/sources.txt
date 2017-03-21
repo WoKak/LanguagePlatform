@@ -1,2 +1,4 @@
 for_dialog.png file comes from site: http://www.flaticon.com/free-icon/mortarboard_214349#term=education&page=1&position=18
 for_warning.png file comes from site: http://www.flaticon.com/free-icon/warning_196759#term=warning&page=1&position=10
+
+rest of the images are from pixabay.com
