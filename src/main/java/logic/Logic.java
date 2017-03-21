@@ -12,6 +12,7 @@ import java.util.Optional;
 import database.Connection;
 import database.CreateTable;
 import database.DropTable;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
 
@@ -142,7 +143,7 @@ public class Logic {
 
         GUI.getAddButton().setOnAction((event -> {
 
-            Optional<Pair<String, String>> resultFromDialog = AddNewWordDialog.showANWDialog();
+            Optional<Pair<String, String>> resultFromDialog = Dialogs.showAddNewWordDialog();
 
             resultFromDialog.ifPresent(toAdd -> {
 
@@ -177,31 +178,36 @@ public class Logic {
 
     public void addActionToImportItem(MenuItem item) {
 
-        GUI.getAddButton().setOnAction((event -> {
+        item.setOnAction((event -> {
 
-            try {
+            Optional<ButtonType> result = Dialogs.showConfirmToReinitTable();
 
-                if (isTableExist()) {
+            if (result.get() == ButtonType.OK){
 
-                    DropTable.runDrop();
-                    CreateTable.runCreate();
+                try {
 
-                } else {
+                    if (isTableExist()) {
 
-                    CreateTable.runCreate();
+                        DropTable.runDrop();
+                        CreateTable.runCreate();
+
+                    } else {
+
+                        CreateTable.runCreate();
+                    }
+
+                } catch (SQLException ex) {
+
+                    for (Throwable t : ex)
+                        t.printStackTrace();
+
+                } catch (IOException ex) {
+
+                    System.out.print("Read error!");
                 }
-
-            } catch (SQLException ex) {
-
-                for (Throwable t : ex)
-                    t.printStackTrace();
-
-            } catch (IOException ex) {
-
-                System.out.print("Read error!");
             }
-
         }));
+
     }
 
     public static boolean isTableExist() throws SQLException, IOException {

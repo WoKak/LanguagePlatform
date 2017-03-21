@@ -14,9 +14,9 @@ import java.util.Optional;
 /**
  * Created by Michał on 2017-03-21.
  */
-public class AddNewWordDialog extends Dialog {
+public class Dialogs extends Dialog {
 
-    public static Optional<Pair<String, String>> showANWDialog() {
+    public static Optional<Pair<String, String>> showAddNewWordDialog() {
 
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Dodaj słówko");
@@ -60,6 +60,25 @@ public class AddNewWordDialog extends Dialog {
         });
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
+
+        return result;
+    }
+
+    public static Optional<ButtonType> showConfirmToReinitTable() {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("UWAGA!!!");
+        alert.setHeaderText("Import spowoduje usunięcie aktualnych słówek i wstawienie tych z pliku bazowego.");
+        alert.setContentText("Czy chcesz kontynuować?");
+        alert.setGraphic(new ImageView(("images/for_warning.png")));
+
+        // Get the Stage.
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+        // Add a custom icon.
+        stage.getIcons().add(new Image(("images/pug.png")));
+
+        Optional<ButtonType> result = alert.showAndWait();
 
         return result;
     }

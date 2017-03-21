@@ -81,7 +81,7 @@ public class GUI extends Application {
 
         MenuBar menuBar = new MenuBar();
         Menu progressMenu = new Menu("Postępy");
-        Menu baseMenu = new Menu("Baza");
+        Menu baseMenu = new Menu("Słówka");
         menuBar.getMenus().add(progressMenu);
         menuBar.getMenus().add(baseMenu);
 
@@ -94,7 +94,7 @@ public class GUI extends Application {
         logic.addActionToShowItem(show);
         progressMenu.getItems().add(show);
 
-        dbImport = new MenuItem("Importuj do bazy");
+        dbImport = new MenuItem("Import");
         logic.addActionToImportItem(dbImport);
         baseMenu.getItems().add(dbImport);
 
