@@ -6,9 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 import database.Connection;
@@ -18,6 +16,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
 
 import app.*;
+import javafx.util.Pair;
 
 
 /**
@@ -139,10 +138,40 @@ public class Logic {
         });
     }
 
-    public void addActionToAddButton() {
+    public void addActionToAddButton(){
 
         GUI.getAddButton().setOnAction((event -> {
 
+            Optional<Pair<String, String>> resultFromDialog = AddNewWordDialog.showANWDialog();
+
+            resultFromDialog.ifPresent(toAdd -> {
+
+                try (java.sql.Connection conn = Connection.getConnection()) {
+
+                    Statement stat = conn.createStatement();
+                    Integer size = 0;
+
+                    try (ResultSet result = stat.executeQuery("SELECT * FROM Main"))
+                    {
+                        while (result.next())
+                            size++;
+                    }
+
+                    String insertUpdate = "INSERT INTO Main VALUES (?, ?, ?)";
+
+                    PreparedStatement pstat = conn.prepareStatement(insertUpdate);
+                    pstat.setString(1, toAdd.getKey());
+                    pstat.setString(2, toAdd.getValue());
+                    pstat.setString(3, size.toString());
+                    pstat.executeUpdate();
+
+                } catch (SQLException ex) {
+                    System.out.println("SQL error!");
+                } catch (IOException ex) {
+                    System.out.println("IO error!");
+                }
+
+            });
         }));
     }
 
