@@ -1,8 +1,22 @@
 [![Code Climate](https://lima.codeclimate.com/github/WoKak/LanguagePlatform/badges/gpa.svg)](https://lima.codeclimate.com/github/WoKak/LanguagePlatform)
 
-Now jar file is the old version of the project (without database usage) - it will be updated later.
+There are two versions of the project:
+--------------------------------------
+
+1. latest version
+
+database, dialogs, etc.
+
+2. old version (unsupported)
+
+previous version of the project
+
+
 
 To run this project:
+--------------------
+ 
+In both cases you need to run jar file in the resources directory.
  
 1. (database version - latest one)
 
@@ -15,21 +29,14 @@ java -jar plang(latest_ver).jar
 
 Just open the jar file.
  
- -------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------
  
-You also need base.txt file in both versions:
+- You also need base.txt file in both versions. (very simple one is provided in the same directory as jar file).
 
-1.) file is needed for the operation: "create table" in the database
-
-2.) program reads words from this file
-
-
-(very simple one is provided in the same directory as jar file).
-
-In order to change base just replace base.txt file (WARNING! words should be in the same order
+- In order to change base just replace base.txt file (WARNING! words should be in the same order
 as before).
 
-As well as you need database.properties file, i.e:
+- As well as you need database.properties file, i.e:
 
 jdbc.drivers=org.postgresql.Driver
 

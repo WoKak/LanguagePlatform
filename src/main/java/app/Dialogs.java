@@ -68,7 +68,7 @@ public class Dialogs extends Dialog {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("UWAGA!!!");
-        alert.setHeaderText("Import spowoduje usunięcie aktualnych słówek i wstawienie tych z pliku bazowego.");
+        alert.setHeaderText("Import spowoduje usunięcie aktualnych słówek\noraz wstawienie tych z pliku bazowego.");
         alert.setContentText("Czy chcesz kontynuować?");
         alert.setGraphic(new ImageView(("images/for_warning.png")));
 
