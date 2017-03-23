@@ -1,5 +1,3 @@
-[![Code Climate](https://lima.codeclimate.com/github/WoKak/LanguagePlatform/badges/gpa.svg)](https://lima.codeclimate.com/github/WoKak/LanguagePlatform)
-
 There are two versions of the project:
 --------------------------------------
 
