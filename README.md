@@ -1,29 +1,45 @@
-There are two versions of the project:
---------------------------------------
+# webPlang
 
-1. latest version
+this is a desktop platform for learning language
+
+## Technology stack
+
+* Java 8
+* JavaFX
+* Maven 3.3.9
+* PostgreSQL 9.6.2
+
+## Features
+
+* Simple exercise testing knowledge of randomly chosen 20 words
+* Adding words to database
+
+# There are two versions of the project:
+
+# 1. latest version
 
 database, dialogs, etc.
 
-2. old version (unsupported)
+# 2. old version (unsupported)
 
 previous version of the project
 
 
-
-To run this project:
---------------------
+# To run this project:
  
 In both cases you need to run jar file in the resources directory.
  
-1. (database version - latest one)
+# 1. (database version - latest one)
 
 At first PostgreSQL Server is needed. Then it is crucial to create database named plang.
 Run jar file using command:
 
-java -jar plang(latest_ver).jar
+```
+    java -jar plang(latest_ver).jar
+```
 
-2. (old version)
+
+# 2. (old version)
 
 Just open the jar file.
  
@@ -36,10 +52,12 @@ as before).
 
 - As well as you need database.properties file, i.e:
 
-jdbc.drivers=org.postgresql.Driver
-
-jdbc.url=jdbc:postgresql:plang
-
-jdbc.username=postgres
-
-jdbc.password=verysecretpassword
+```
+    jdbc.drivers=org.postgresql.Driver
+    
+    jdbc.url=jdbc:postgresql:plang
+    
+    jdbc.username=postgres
+    
+    jdbc.password=verysecretpassword
+```
