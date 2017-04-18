@@ -1,4 +1,4 @@
-# webPlang
+# plang
 
 this is a desktop platform for learning language
 
@@ -16,32 +16,33 @@ this is a desktop platform for learning language
 
 # There are two versions of the project:
 
-# 1. latest version
+ 1. latest version
 
-database, dialogs, etc.
+    database, dialogs, etc.
 
-# 2. old version (unsupported)
+ 2. old version (unsupported)
 
-previous version of the project
+    previous version of the project
 
 
 # To run this project:
  
 In both cases you need to run jar file in the resources directory.
  
-# 1. (database version - latest one)
+ 1. (database version - latest one)
 
-At first PostgreSQL Server is needed. Then it is crucial to create database named plang.
-Run jar file using command:
+    - At first PostgreSQL Server is needed. Then it is crucial to create database named plang.
+  
+    - Run jar file using command:
 
 ```
     java -jar plang(latest_ver).jar
 ```
 
 
-# 2. (old version)
+ 2. (old version)
 
-Just open the jar file.
+    Just open the jar file.
  
 -------------------------------------------------------------
  
