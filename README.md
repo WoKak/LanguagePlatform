@@ -13,6 +13,8 @@ this is a desktop platform for learning language
 
 * Simple exercise testing knowledge of randomly chosen 20 words
 * Adding words to database
+* Changing style of application
+* Progress monitoring
 
 # There are two versions of the project:
 
